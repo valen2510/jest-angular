@@ -1,37 +1,67 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, catchError, of } from 'rxjs';
-import { User, UserCheck } from '../interfaces/auth.interface';
+import { Observable, catchError, map, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
+import { User, UserCheck, UserInfo } from '../interfaces/user.interface';
+import { ApiResponse } from 'src/app/interfaces/api-response.interface';
+import { Login } from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private apiUrl: string = 'http://localhost:3001/users/';
+  private authUrl: string = `${environment.api}/users`;
 
   constructor(private http: HttpClient) {}
 
-  private checkUserInfo(url: string): Observable<UserCheck | null> {
-    return this.http.get<UserCheck>(url).pipe(
-      catchError(() => of(null)));
+  private checkUserInfo(
+    url: string,
+    params?: any
+  ): Observable<ApiResponse<UserCheck>> {
+    const options = params ? { params } : {};
+    return this.http.get<UserCheck>(url, options).pipe(
+      map((response) => ({ status: true, response })),
+      catchError(() => of({ status: false, message: 'Error de conexion' }))
+    );
   }
 
   existsUsername(name: string): Observable<UserCheck | null> {
-    const url = `${this.apiUrl}exist-name/${name}`;
-    return this.checkUserInfo(url);
+    const url = `${this.authUrl}/exist-name/${name}`;
+    return this.checkUserInfo(url).pipe(
+      map((res) => {
+        if (!res.status) {
+          alert(res.message);
+        }
+        return res.response?.exists ? res.response : null;
+      })
+    );
   }
 
   existsEmail(email: string): Observable<UserCheck | null> {
-    const url = `${this.apiUrl}exist-email?email=${email}`;
-    return this.checkUserInfo(url);
+    const url = `${this.authUrl}/exist-email`;
+    const params = { email };
+    return this.checkUserInfo(url, params).pipe(
+      map((res) => {
+        if (!res.status) {
+          alert(res.message);
+        }
+        return res.response?.exists ? res.response : null;
+      })
+    );
   }
 
-  createUser(data: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, data);
+  createUser(data: UserInfo): Observable<ApiResponse<UserInfo>> {
+    return this.http.post<UserInfo>(this.authUrl, data).pipe(
+      map((response) => ({ status: true, response })),
+      catchError(() => of({ status: false, message: 'Error de conexion' }))
+    );
   }
 
-  loginUser(data: User): Observable<User> {
-    const url = `${this.apiUrl}login`;
-    return this.http.post<User>(url, data);
+  loginUser(data: User): Observable<ApiResponse<Login>> {
+    const url = `${this.authUrl}/login`;
+    return this.http.post<Login>(url, data).pipe(
+      map((response) => ({ status: true, response })),
+      catchError((err) => of({ status: false, message: err}))
+    );
   }
 }
