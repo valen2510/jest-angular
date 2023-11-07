@@ -1,10 +1,7 @@
-export interface UserCheck {
-  exists: boolean;
-}
+import { User } from "./user.interface";
 
-export interface User {
-  name: string;
-  email: string;
-  password: string;
-  category: number[];
+export interface Login {
+  user:         User;
+  access_token: string;
+  tokenType:    string;
 }
