@@ -11,7 +11,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { UserCheck } from '../../interfaces/auth.interface';
+import { UserCheck } from '../../interfaces/user.interface';
 import { Observable, map } from 'rxjs';
 import { CategoryService } from 'src/app/services/category.service';
 import { Category } from 'src/app/interfaces/category.interface';
@@ -43,13 +43,16 @@ export class SignupFormComponent {
           Validators.required,
           Validators.minLength(8),
           Validators.pattern(
-            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\?\$%\^&\*])(?=.{8,})/
           ),
         ]),
-        confirmPassword: this.fb.control('', [Validators.required, this.passwordMatchingValidator()]),
+        confirmPassword: this.fb.control('', [
+          Validators.required,
+          this.passwordMatchingValidator(),
+        ]),
         categories: this.fb.array([], this.arrayMinLength(3)),
       },
-      { updateOn: 'blur' }
+      { updateOn: 'blur' || 'submit' }
     );
   }
 
@@ -60,8 +63,22 @@ export class SignupFormComponent {
   }
 
   onSubmit() {
+    if (this.registerForm.invalid) return;
+
     const myFormValues = this.registerForm.getRawValue();
-    alert(JSON.stringify(myFormValues));
+    const { name, email, password, categories } = myFormValues;
+    const newUser = {
+      name,
+      email,
+      password,
+      category: categories,
+    };
+
+    this.authService.createUser(newUser).pipe(
+      map((res) => {
+        alert(res.message);
+      })
+    );
   }
 
   onClickCategory(e: any) {
@@ -76,7 +93,6 @@ export class SignupFormComponent {
       );
       this.categories.removeAt(index);
     }
-    console.log(this.categories);
   }
 
   get name(): FormControl {
@@ -173,32 +189,21 @@ export class SignupFormComponent {
     };
   };
 
-  arrayMinLength =
-    (min: number): ValidatorFn | any => {
-       return (control: AbstractControl[]): ValidationErrors | null => {
-         return control.length < min ? { minLength: true } : null;
-       };
-    }
+  arrayMinLength = (min: number): ValidatorFn | any => {
+    return (control: AbstractControl[]): ValidationErrors | null => {
+      return control.length < min ? { minLength: true } : null;
+    };
+  };
 
   asyncNameValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<UserCheck | null> => {
-      return this.authService.existsUsername(this.name.value).pipe(
-        map((res) => {
-          if (!res) alert('Ocurrio un error de conexion');
-          return res?.exists ? res : null;
-        })
-      );
+      return this.authService.existsUsername(control.value)
     };
   }
 
   asyncEmailValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<UserCheck | null> => {
-      return this.authService.existsEmail(this.email.value).pipe(
-        map((res) => {
-          if (!res) alert('Ocurrio un error de conexion');
-          return res?.exists ? res : null;
-        })
-      );
+      return this.authService.existsEmail(control.value)
     };
   }
 }

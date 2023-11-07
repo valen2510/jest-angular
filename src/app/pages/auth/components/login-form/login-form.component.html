@@ -6,14 +6,20 @@
   <div class="card__content">
     <form [formGroup]="registerForm">
       <pichincha-input
-        label="Correo electrónico"
-        formControlName="input"
-        placeholder="Pon algún valor"
+        label="Nombre de usuario"
+        formControlName="name"
+        placeholder="Ej. makoto"
+        type="text"
+        [errorHelper]="errorUsername"
+        [state]="username.errors && username.touched ? 'error' : ''"
       ></pichincha-input>
       <pichincha-input
         label="Contraseña"
-        formControlName="input"
-        placeholder="Pon algún valor"
+        formControlName="password"
+        type="password"
+        placeholder="*****"
+        [errorHelper]="errorPassword"
+        [state]="password.errors && password.touched ? 'error' : ''"
       ></pichincha-input>
       <div class="card__footer">
         <pichincha-link-button

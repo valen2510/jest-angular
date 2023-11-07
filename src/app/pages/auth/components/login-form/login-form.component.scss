@@ -11,16 +11,12 @@
     }
   }
 
-  &__content {
-    padding: 1em 0.5em;
-  }
-
   &__footer {
     border-top: 1px solid var(--bp-grayScale50);
     display: flex;
     justify-content: space-between;
     margin-top: 1.5em;
-    padding-top: 1em;
     background-color: var(--bp-grayScale50);
+    padding: 1rem;
   }
 }
