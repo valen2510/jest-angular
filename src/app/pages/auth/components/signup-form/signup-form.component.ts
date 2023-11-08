@@ -197,13 +197,27 @@ export class SignupFormComponent {
 
   asyncNameValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<UserCheck | null> => {
-      return this.authService.existsUsername(control.value)
+      return this.authService.existsUsername(control.value).pipe(
+        map((res) => {
+          if (!res.status) {
+            alert(res.message);
+          }
+          return res.response?.exists ? res.response : null;
+        })
+      );
     };
   }
 
   asyncEmailValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<UserCheck | null> => {
-      return this.authService.existsEmail(control.value)
+      return this.authService.existsEmail(control.value).pipe(
+        map((res) => {
+          if (!res.status) {
+            alert(res.message);
+          }
+          return res.response?.exists ? res.response : null;
+        })
+      );
     };
   }
 }
