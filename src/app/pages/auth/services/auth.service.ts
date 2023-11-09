@@ -36,17 +36,23 @@ export class AuthService {
     return this.checkUserInfo(url, params);
   }
 
-  createUser(data: UserInfo): Observable<ApiResponse<UserInfo>> {
-    return this.http.post<UserInfo>(this.authUrl, data).pipe(
-      map((response) => ({ status: true, response })),
-      catchError(() => of({ status: false, message: 'Error de conexion' }))
+  createUser(data: UserInfo): Observable<ApiResponse<User>> {
+    const url = `${this.authUrl}/`
+    return this.http.post<User>(url, data).pipe(
+      map((response) => {
+        return { status: true, message: 'Usuario registrado exitosamente' };
+      }),
+      catchError((err) => {
+       return of({ status: false, message: 'Error de conexion' })
+      })
     );
   }
 
   loginUser(data: User): Observable<ApiResponse<Login>> {
     const url = `${this.authUrl}/login`;
     return this.http.post<Login>(url, data).pipe(
-      map((response) => ({ status: true, response })),
+      map((response) => {
+        return { status: true, response }}),
       catchError((err) => of({ status: false, message: err }))
     );
   }

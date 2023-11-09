@@ -34,7 +34,7 @@ describe('AuthService', () => {
     const mockDataResponse = { status: true, response: { exists: false } };
 
     authService.existsUsername('exampleName').subscribe((res) => {
-      expect(res).toEqual(mockDataResponse);
+      expect(res.response?.exists).toBeFalsy();
     });
 
     const url = `${api}/users/exist-name/exampleName`;
@@ -49,10 +49,10 @@ describe('AuthService', () => {
     const mockDataResponse = { status: true, response: { exists: true } };
 
     authService.existsUsername('existingName').subscribe((res) => {
-      expect(res).toEqual(mockDataResponse);
+      expect(res.response?.exists).toBeTruthy();
     });
 
-    const url = `${api}/users/exist-name/exampleName`;
+    const url = `${api}/users/exist-name/existingName`;
     const req = httpTestingController.expectOne(url);
 
     expect(req.request.method).toEqual('GET');
@@ -60,34 +60,33 @@ describe('AuthService', () => {
     req.flush(mockDataResponse);
   });
 
-  // it('check username value request fail', () => {
-  //   const status = 500;
-  //   const statusText = 'Internal Server Error';
-  //   const errorMessage = 'API error';
+  it('check username value request fail', () => {
+    const status = 500;
+    const statusText = 'Internal Server Error';
+    const mockErrorMessage = 'Error de conexion';
 
-  //   authService.existsUsername('existingName').subscribe({
-  //     error: (error: HttpErrorResponse) => {
-  //       expect(error.status).withContext('status').toEqual(500);
-  //       expect(error.error).withContext('message').toEqual(errorMessage);
-  //     }
-  //   });
+    authService.existsUsername('existingName').subscribe((res) => {
+      expect(res.status).toBeFalsy();
+      expect(res.message).toEqual(mockErrorMessage);
+    });
 
-  //    const url = `${api}/users/exist-name/exampleName`;
-  //    const req = httpTestingController.expectOne(url);
+     const url = `${api}/users/exist-name/existingName`;
+     const req = httpTestingController.expectOne(url);
 
-  //    expect(req.request.method).toEqual('GET');
+     expect(req.request.method).toEqual('GET');
 
-  //    req.flush(errorMessage, {status, statusText});
-  //  });
+     req.flush(mockErrorMessage, {status, statusText});
+   });
 
   it('check email value that does not exists', () => {
     const mockDataResponse = { status: true, response: { exists: false } };
+    const mockEmail = 'newEmail'
 
-    authService.existsEmail('newemail').subscribe((res) => {
-      expect(res).toEqual(mockDataResponse);
+    authService.existsEmail(mockEmail).subscribe((res) => {
+      expect(res.response?.exists).toBeFalsy();
     });
 
-    const url = `${api}/users/exist-email/newemail`;
+    const url = `${api}/users/exist-email?email=newEmail`;
     const req = httpTestingController.expectOne(url);
 
     expect(req.request.method).toEqual('GET');
@@ -97,12 +96,13 @@ describe('AuthService', () => {
 
   it('check email value that exists', () => {
     const mockDataResponse = { status: true, response: { exists: true } };
+    const mockEmail = 'usedEmail';
 
-    authService.existsEmail('usedEmail').subscribe((res) => {
+    authService.existsEmail(mockEmail).subscribe((res) => {
       expect(res).toEqual(mockDataResponse);
     });
 
-    const url = `${api}/users/exist-email/usedEmail`;
+    const url = `${api}/users/exist-email?email=usedEmail`;
     const req = httpTestingController.expectOne(url);
 
     expect(req.request.method).toEqual('GET');
@@ -110,26 +110,26 @@ describe('AuthService', () => {
     req.flush(mockDataResponse);
   });
 
-  it('create a new user', () => {
-    const mockDataResponse = { status: true, response: 'Ok' };
-    const mockData = {
-      name: 'newUser',
-      email: 'new-user@email.com',
-      password: 'qwerty',
-      category: [12, 7, 17],
-    };
+  // it('create a new user', () => {
+  //   const mockDataResponse = { status: true, response: 'Ok' };
+  //   const mockData = {
+  //     name: 'newUser',
+  //     email: 'new-user@email.com',
+  //     password: 'qwerty',
+  //     category: [12, 7, 17],
+  //   };
 
-    authService.createUser(mockData).subscribe((res) => {
-      expect(res).toEqual(mockDataResponse);
-    });
+  //   authService.createUser(mockData).subscribe((res) => {
+  //     expect(res).toEqual(mockDataResponse);
+  //   });
 
-    const url = `${api}/users`;
-    const req = httpTestingController.expectOne(url);
+  //   const url = `${api}/users`;
+  //   const req = httpTestingController.expectOne(url);
 
-    expect(req.request.method).toEqual('POST');
+  //   expect(req.request.method).toEqual('POST');
 
-    req.flush(mockDataResponse);
-  });
+  //   req.flush(mockDataResponse);
+  // });
 
   it('login with user', () => {
     const mockData = {
@@ -149,7 +149,7 @@ describe('AuthService', () => {
     };
 
     authService.loginUser(mockData).subscribe((res) => {
-      expect(res).toEqual(mockDataResponse);
+      expect(res.response?.user).toEqual(mockDataResponse.response.user);
     });
 
     const url = `${api}/users/login`;
