@@ -5,8 +5,8 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { map } from 'rxjs';
 
 @Component({
   selector: 'login-form',
@@ -16,7 +16,7 @@ import { map } from 'rxjs';
 export class LoginFormComponent {
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     this.buildForm();
   }
 
@@ -38,14 +38,14 @@ export class LoginFormComponent {
 
   onSubmit() {
     const myFormValues = this.registerForm.getRawValue();
-    alert(JSON.stringify(myFormValues));
-
     const { username, password } = myFormValues;
-    this.authService.loginUser({ username, password }).pipe(
-      map((res) => {
-        console.log(res);
-      })
-    );
+    this.authService.loginUser({ username, password }).subscribe((res) => {
+      if (!res.status) {
+        alert(res.message)
+        return
+      }
+      this.router.navigateByUrl('/books')
+    })
   }
 
   get username(): FormControl {

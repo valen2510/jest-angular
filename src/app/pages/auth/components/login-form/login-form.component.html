@@ -7,7 +7,7 @@
     <form [formGroup]="registerForm">
       <pichincha-input
         label="Nombre de usuario"
-        formControlName="name"
+        formControlName="username"
         placeholder="Ej. makoto"
         type="text"
         [errorHelper]="errorUsername"
@@ -25,7 +25,7 @@
         <pichincha-link-button
           label="Registrate Aqui"
           variant="open"
-          href="/auth/signup"
+          routerLink="/auth/signup"
         ></pichincha-link-button>
         <pichincha-button
           (clickEvent)="onSubmit()"
