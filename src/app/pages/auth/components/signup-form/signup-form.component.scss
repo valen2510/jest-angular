@@ -21,13 +21,16 @@
       overflow-y: auto;
     }
 
-    .content__text--error {
-      color: var(--bp-alert-error500);
+    .content__text {
       margin-left: 1em;
       font-size: 12px;
       line-height: 16px;
       letter-spacing: 0px;
+
+    &--error {
+      color: var(--bp-alert-error500);
     }
+  }
   }
 
   &__footer{

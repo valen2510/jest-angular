@@ -38,12 +38,16 @@ export class SignupFormComponent {
     this.registerForm = this.fb.group(
       {
         name: ['', Validators.required, this.asyncNameValidator()],
-        email: ['', Validators.required, this.asyncEmailValidator()],
+        email: this.fb.control(
+          '',
+          [Validators.required, Validators.email],
+          [this.asyncEmailValidator()]
+        ),
         password: this.fb.control('', [
           Validators.required,
           Validators.minLength(8),
           Validators.pattern(
-            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#\?\$%\^&\*])(?=.{8,})/
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@+_#\?\$%\^&\*])(?=.{8,})/
           ),
         ]),
         confirmPassword: this.fb.control('', [
@@ -57,8 +61,8 @@ export class SignupFormComponent {
   }
 
   getCategories() {
-    this.categoryService.getAllCategories().subscribe((categories) => {
-      this.categoriesCatalog = categories;
+    this.categoryService.getAllCategories().subscribe((res) => {
+      this.categoriesCatalog = res.response!;
     });
   }
 
@@ -74,11 +78,10 @@ export class SignupFormComponent {
       category: categories,
     };
 
-    this.authService.createUser(newUser).pipe(
-      map((res) => {
-        alert(res.message);
-      })
-    );
+    this.authService.createUser(newUser).subscribe((res) => {
+      alert(res.message);
+      return;
+    });
   }
 
   onClickCategory(e: any) {
@@ -123,6 +126,7 @@ export class SignupFormComponent {
       },
       email: {
         required: 'Correo es requerido',
+        email: 'Correo debe ser valido',
         exists: 'Correo ya se encuentra en uso',
       },
       password: {
@@ -152,6 +156,8 @@ export class SignupFormComponent {
   get errorEmail() {
     return this.email.hasError('required')
       ? this.validationMessages().email.required
+      : this.email.hasError('email')
+      ? this.validationMessages().email.email
       : this.email.hasError('exists')
       ? this.validationMessages().email.exists
       : '';
