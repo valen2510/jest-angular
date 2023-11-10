@@ -1,0 +1,22 @@
+.card {
+  border: 1px solid var(--bp-grayScale100);
+  padding: 1rem;
+  border-radius: 5px;
+  width: 23rem;
+
+  &__header {
+
+    .header__title {
+      margin: 0.3rem 0;
+    }
+  }
+
+  &__footer {
+    border-top: 1px solid var(--bp-grayScale50);
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5em;
+    background-color: var(--bp-grayScale50);
+    padding: 1rem;
+  }
+}

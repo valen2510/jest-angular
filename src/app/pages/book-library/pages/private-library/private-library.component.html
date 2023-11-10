@@ -1,0 +1,18 @@
+<section-header title="Tus Libros" variant="secondary">
+  <pichincha-button
+  variant="secondary"
+  label="Agregar libro"
+  routerLink="/books/record"
+></pichincha-button>
+</section-header>
+<pichincha-grid mode="grid">
+  <pichincha-grid-item>
+    <pichincha-input placeholder="Ej. Angular, React"></pichincha-input>
+  </pichincha-grid-item>
+  <pichincha-grid-item start="4" class="grid--end-aligment">
+      <pichincha-dropdown [items]="categories" placeholder="Seleccione categoria"></pichincha-dropdown>
+  </pichincha-grid-item>
+  <pichincha-grid-item *ngFor="let book of books">
+    <book-card [imgUrl]="book.image"></book-card>
+  </pichincha-grid-item>
+</pichincha-grid>

@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="card__header">
+    <h2 class="header__title">Iniciar de sesión</h2>
+    <pichincha-divider></pichincha-divider>
+  </div>
+  <div class="card__content">
+    <form [formGroup]="registerForm">
+      <pichincha-input
+        label="Nombre de usuario"
+        formControlName="username"
+        placeholder="Ej. makoto"
+        type="text"
+        [errorHelper]="errorUsername"
+        [state]="username.errors && username.touched ? 'error' : ''"
+      ></pichincha-input>
+      <pichincha-input
+        label="Contraseña"
+        formControlName="password"
+        type="password"
+        placeholder="*****"
+        [errorHelper]="errorPassword"
+        [state]="password.errors && password.touched ? 'error' : ''"
+      ></pichincha-input>
+      <div class="card__footer">
+        <pichincha-link-button
+          label="Registrate Aqui"
+          variant="open"
+          routerLink="/auth/signup"
+        ></pichincha-link-button>
+        <pichincha-button
+          (clickEvent)="onSubmit()"
+          size="large"
+          label="Iniciar de sesión"
+        ></pichincha-button>
+      </div>
+    </form>
+  </div>
+</div>

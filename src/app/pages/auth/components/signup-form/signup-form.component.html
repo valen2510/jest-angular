@@ -1,0 +1,73 @@
+<div class="card">
+  <div class="card__header">
+    <h2 class="header__title">Registrarse</h2>
+    <pichincha-divider></pichincha-divider>
+  </div>
+  <div class="card__content">
+    <form [formGroup]="registerForm">
+      <pichincha-input
+        label="Nombre de usuario"
+        formControlName="name"
+        placeholder="Ej. makoto"
+        type="text"
+        [errorHelper]="errorName"
+        [state]="name.errors && name.touched ? 'error' : ''"
+      ></pichincha-input>
+      <pichincha-input
+        label="Correo electrónico"
+        formControlName="email"
+        type="email"
+        placeholder="Ej. name@example.com"
+        [errorHelper]="errorEmail"
+        [state]="email.errors && email.touched ? 'error' : ''"
+      ></pichincha-input>
+      <pichincha-input
+        label="Contraseña"
+        formControlName="password"
+        type="password"
+        placeholder="*****"
+        [errorHelper]="errorPassword"
+        [state]="password.errors && password.touched ? 'error' : ''"
+      ></pichincha-input>
+      <pichincha-input
+        label="Confirmar contraseña"
+        formControlName="confirmPassword"
+        type="password"
+        placeholder="*****"
+        [errorHelper]="errorConfirmPassword"
+        [state]="
+          confirmPassword.errors && confirmPassword.touched ? 'error' : ''
+        "
+      ></pichincha-input>
+      <h2 class="content__subtitle">Categorias</h2>
+      <div class="content__subcontent">
+        <pichincha-check-box
+          *ngFor="let category of categoriesCatalog"
+          idElement="{{ category.id }}"
+          size="small"
+          text="{{ category.description }}"
+          value="{{ category.id }}"
+          [error]="categories.errors && categories.touched"
+          (clickCheck)="onClickCategory($event)"
+        >
+        </pichincha-check-box>
+      </div>
+      <div *ngIf="categories.errors" class="content__text--error">
+        {{ errorCategories }}
+      </div>
+      <div class="card__footer">
+        <pichincha-link-button
+          label="Iniciar de sesión"
+          variant="open"
+          routerLink="/auth/login"
+        ></pichincha-link-button>
+        <pichincha-button
+          (clickEvent)="onSubmit()"
+          size="large"
+          label="Registrar"
+          [disabled]="registerForm.invalid"
+        ></pichincha-button>
+      </div>
+    </form>
+  </div>
+</div>

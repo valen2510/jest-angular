@@ -1,0 +1,11 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1em;
+
+  &.primary {
+    background-color: var(--bp-grayScale50);
+    padding: 1em;
+  }
+}
