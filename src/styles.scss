@@ -1,0 +1,22 @@
+@import url(@pichincha/ds-core/dist/ds-core/ds-core.css);
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: prelo-medium, Helvetica, Arial, Sans, sans-serif;
+    font-size: 12px;
+    height: 100vh;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    justify-content: center;
+    overflow-y: auto;
+
+    &__content {
+        overflow: auto;
+        max-height: -webkit-fill-available;
+    }
+}
