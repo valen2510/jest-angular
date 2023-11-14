@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class BookCardComponent {
   @Input() imgUrl: string = ''
+  @Input() bookId: string = ''
 }

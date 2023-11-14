@@ -1,1 +1,108 @@
-<p>book-record works!</p>
+<section-header title="Registro Libro" variant="secondary"></section-header>
+<div class="card">
+    <div class="card__content">
+        <form [formGroup]="registerForm">
+    <pichincha-grid mode="grid">
+        <pichincha-grid-item span="2">
+            <pichincha-input
+          label="Nombre de libro"
+          formControlName="bookName"
+          placeholder="Ej. Angular + NGRX"
+          type="text"
+          [errorHelper]="errorBookName"
+          [state]="bookName.errors && bookName.touched ? 'error' : ''"
+        ></pichincha-input>
+        </pichincha-grid-item>
+        <pichincha-grid-item span="2">
+            <pichincha-input
+          label="Nombre del autor"
+          formControlName="authorName"
+          type="text"
+          placeholder="Ej. Kevin Suarez"
+          [errorHelper]="errorAuthorName"
+          [state]="authorName.errors && authorName.touched ? 'error' : ''"
+        ></pichincha-input>
+        </pichincha-grid-item>
+        <pichincha-grid-item span="2">
+        <pichincha-input
+          label="URL del libro"
+          formControlName="bookUrl"
+          type="text"
+          placeholder="Ej. https://books-all.com/"
+          [errorHelper]="errorBookUrl"
+          [state]="bookUrl.errors && bookUrl.touched ? 'error' : ''"
+        ></pichincha-input>
+    </pichincha-grid-item>
+    <pichincha-grid-item span="2">
+        <pichincha-input
+          label="Imagen de portada"
+          formControlName="bookImage"
+          type="text"
+          placeholder="Ej. https://books-all.com/img"
+          [errorHelper]="errorBookImage"
+          [state]="
+            bookImage.errors && bookImage.touched ? 'error' : ''
+          "
+        ></pichincha-input>
+    </pichincha-grid-item>
+    <pichincha-grid-item span="2">
+        <pichincha-input
+          label="Resumen del libro"
+          formControlName="bookResume"
+          type="text"
+          placeholder="Ej. ..."
+          [errorHelper]="errorBookResume"
+          [state]="
+            bookResume.errors && bookResume.touched ? 'error' : ''
+          "
+        ></pichincha-input>
+    </pichincha-grid-item>
+    <pichincha-grid-item span="2">
+          <pichincha-check-box
+            size="small"
+            text="Publicar"
+            formControlName="publish"
+            [error]="categories.errors && categories.touched"
+            (clickCheck)="onClickCategory($event)"
+          >
+          </pichincha-check-box>
+    </pichincha-grid-item>
+    <pichincha-grid-item span="4">
+        <h2 class="content__subtitle">Categorias</h2>
+        <div class="content__subcontent">
+          <pichincha-check-box
+            *ngFor="let category of categoriesCatalog"
+            idElement="{{ category.id }}"
+            size="small"
+            text="{{ category.description }}"
+            value="{{ category.id }}"
+            [error]="categories.errors && categories.touched"
+            (clickCheck)="onClickCategory($event)"
+          >
+          </pichincha-check-box>
+        </div>
+    </pichincha-grid-item>
+        <div *ngIf="categories.errors" class="content__text--error">
+          {{ errorCategories }}
+        </div>
+        <pichincha-grid-item start="4">
+        <div class="card__footer">
+            <pichincha-button
+            (clickEvent)="onSubmit()"
+            size="large"
+            label="Cancelar"
+            variant="secondary"
+            routerLink="/books"
+          ></pichincha-button>
+          <pichincha-button
+            (clickEvent)="onSubmit()"
+            size="large"
+            label="Registrar"
+            [disabled]="registerForm.invalid"
+          ></pichincha-button>
+        </div>
+    </pichincha-grid-item>
+    </pichincha-grid>
+</form>
+    </div>
+  </div>

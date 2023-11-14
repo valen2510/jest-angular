@@ -20,7 +20,7 @@ const routes: Routes = [
         component: BookRecordComponent,
       },
       {
-        path: 'view',
+        path: 'view/:id',
         component: BookViewComponent,
       },
       {
