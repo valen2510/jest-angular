@@ -13,6 +13,6 @@
       <pichincha-dropdown [items]="categories" placeholder="Seleccione categoria"></pichincha-dropdown>
   </pichincha-grid-item>
   <pichincha-grid-item *ngFor="let book of books">
-    <book-card [imgUrl]="book.image"></book-card>
+    <book-card [imgUrl]="book.image" [bookId]="book.id"></book-card>
   </pichincha-grid-item>
 </pichincha-grid>

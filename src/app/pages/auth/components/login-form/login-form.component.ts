@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
+import { LocalService } from 'src/app/services/local.service';
 
 @Component({
   selector: 'login-form',
@@ -16,7 +17,7 @@ import { AuthService } from '../../services/auth.service';
 export class LoginFormComponent {
   registerForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private localService: LocalService) {
     this.buildForm();
   }
 
@@ -44,6 +45,8 @@ export class LoginFormComponent {
         alert(res.message)
         return
       }
+      const userInfo = JSON.stringify(res.response)
+      this.localService.saveData('userInfo', userInfo)
       this.router.navigateByUrl('/books')
     })
   }

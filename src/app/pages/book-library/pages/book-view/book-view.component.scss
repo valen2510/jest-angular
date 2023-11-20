@@ -1,0 +1,9 @@
+.detail {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 2em;
+
+  &__image {
+    margin-right: 5em;
+  }
+}

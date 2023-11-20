@@ -20,7 +20,7 @@ const routes: Routes = [
         component: BookRecordComponent,
       },
       {
-        path: 'view/:id',
+        path: 'view',
         component: BookViewComponent,
       },
       {
@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: '**',
-        redirectTo: '',
+        redirectTo: 'books/record',
       },
     ],
   },

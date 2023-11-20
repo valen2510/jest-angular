@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from "@angular/forms";
-import { PichinchaButtonModule, 
-  PichinchaCheckBoxModule, 
-  PichinchaDropdownModule, 
-  PichinchaGridItemModule, 
-  PichinchaGridModule, 
-  PichinchaInputModule, 
+import { PichinchaButtonModule,
+  PichinchaCheckBoxModule,
+  PichinchaDetailItemListModule,
+  PichinchaDropdownModule,
+  PichinchaGridItemModule,
+  PichinchaGridModule,
+  PichinchaInputModule,
   PichinchaReactiveControlsModule} from '@pichincha/ds-angular';
 import { PrivateLibraryComponent } from './pages/private-library/private-library.component';
 import { BookRecordComponent } from './pages/book-record/book-record.component';
@@ -40,6 +41,7 @@ import { SectionHeaderComponent } from './components/section-header/section-head
     PichinchaInputModule,
     PichinchaDropdownModule,
     PichinchaCheckBoxModule,
+    PichinchaDetailItemListModule,
     PichinchaReactiveControlsModule,
     ReactiveFormsModule,
   ]

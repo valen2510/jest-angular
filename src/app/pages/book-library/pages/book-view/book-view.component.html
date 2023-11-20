@@ -9,6 +9,38 @@ size="large"
 label="Editar"
 routerLink="/books"
 ></pichincha-button>
-<pichincha-grid mode="grid">
-    <book-card [imgUrl]="'hello'"></book-card>
-</pichincha-grid>
+<section class="detail">
+  <div class="detail__image"><book-card [imgUrl]="bookInfo.image"></book-card></div>
+    <div class="detail__items">
+      <pichincha-detail-item-list
+        item-title="Titulo"
+        variant="secondary"
+        [value]="bookInfo.title"
+      >
+      </pichincha-detail-item-list>
+      <pichincha-detail-item-list
+        item-title="Autor"
+        variant="secondary"
+        [value]="bookInfo.isbn13"
+      >
+      </pichincha-detail-item-list>
+      <pichincha-detail-item-list
+        item-title="URL del libro"
+        variant="secondary"
+        [value]="bookInfo.url"
+      >
+      </pichincha-detail-item-list>
+      <pichincha-detail-item-list
+        item-title="Resumen"
+        variant="secondary"
+        [value]="bookInfo.subtitle"
+      >
+      </pichincha-detail-item-list>
+      <pichincha-detail-item-list
+        item-title="Precio"
+        variant="secondary"
+        [value]="bookInfo.price"
+      >
+      </pichincha-detail-item-list>
+    </div>
+  </section>
