@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Category } from 'src/app/interfaces/category.interface';
-import { CategoryService } from 'src/app/services/category.service';
+import { Category } from '../../../../interfaces/category.interface';
+import { CategoryService } from '../../../../services/category.service';
 
 @Component({
   selector: 'app-book-record',
@@ -49,14 +49,14 @@ export class BookRecordComponent {
     if (this.registerForm.invalid) return;
 
     const myFormValues = this.registerForm.getRawValue();
-    const { 
+    const {
       bookName,
       authorName,
       bookUrl,
       bookImage,
       bookResume,
       publish,
-      categories 
+      categories
     } = myFormValues;
     const newBook = {
       bookName,

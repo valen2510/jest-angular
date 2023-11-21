@@ -10,7 +10,7 @@ label="Editar"
 routerLink="/books"
 ></pichincha-button>
 <section class="detail">
-  <div class="detail__image"><book-card [imgUrl]="bookInfo.image"></book-card></div>
+  <div class="detail__image"><book-card [imgUrl]="bookInfo.image || ''"></book-card></div>
     <div class="detail__items">
       <pichincha-detail-item-list
         item-title="Titulo"

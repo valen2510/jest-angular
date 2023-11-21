@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SelectItems } from '@pichincha/ds-core';
-import { Category } from 'src/app/interfaces/category.interface';
-import { CategoryService } from 'src/app/services/category.service';
+import { Category } from '../../../../interfaces/category.interface';
+import { CategoryService } from '../../../../services/category.service';
 import { BooksService } from '../../services/books.service';
 import { Book } from '../../interfaces/books.interface';
 

@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { LocalService } from 'src/app/services/local.service';
+import { LocalService } from '../../../../services/local.service';
 
 @Component({
   selector: 'login-form',

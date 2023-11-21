@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, of } from 'rxjs';
-import { ApiResponse } from 'src/app/interfaces/api-response.interface';
-import { environment } from 'src/environments/environment';
+import { ApiResponse } from '../../../interfaces/api-response.interface';
+import { environment } from '../../../../environments/environment';
 import { Book } from '../interfaces/books.interface';
 
 @Injectable({

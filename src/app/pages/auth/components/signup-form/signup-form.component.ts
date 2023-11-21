@@ -13,8 +13,8 @@ import {
 import { AuthService } from '../../services/auth.service';
 import { UserCheck } from '../../interfaces/user.interface';
 import { Observable, map } from 'rxjs';
-import { CategoryService } from 'src/app/services/category.service';
-import { Category } from 'src/app/interfaces/category.interface';
+import { CategoryService } from '../../../../services/category.service';
+import { Category } from '../../../../interfaces/category.interface';
 
 @Component({
   selector: 'signup-form',

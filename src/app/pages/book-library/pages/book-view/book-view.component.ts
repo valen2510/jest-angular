@@ -25,7 +25,6 @@ export class BookViewComponent implements OnInit{
       this.booksService.getOwnerBooks('').subscribe((res) => {
         const book = res.response?.find(book => book.id === id)
         if (book) {
-          console.log(book)
           this.bookInfo = book
           return
         }
